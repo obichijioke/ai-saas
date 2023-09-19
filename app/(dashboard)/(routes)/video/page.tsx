@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Heading } from "@/components/Heading";
-import { Music } from "lucide-react";
+import { VideoIcon } from "lucide-react";
 import { set, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -14,8 +14,8 @@ import axios from "axios";
 import { Empty } from "@/components/Empty";
 import { Loader } from "@/components/Loader";
 
-const MusicPage = () => {
-  const [music, setMusic] = useState<string>();
+const VideoPage = () => {
+  const [video, setVideo] = useState<string>();
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -29,11 +29,11 @@ const MusicPage = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      setMusic(undefined);
+      setVideo(undefined);
 
-      const response = await axios.post("/api/music", values);
+      const response = await axios.post("/api/video", values);
       //console.log(response.data);
-      setMusic(response.data.audio);
+      setVideo(response.data[0]);
       form.reset();
     } catch (error: any) {
       //TODO: Open pro modal
@@ -46,11 +46,11 @@ const MusicPage = () => {
   return (
     <div>
       <Heading
-        title="Music Generation"
-        description="Piano music generation"
-        icon={Music}
-        iconColor="text-green-700"
-        bgColor="bg-green-700/10"
+        title="Video Generation"
+        description="Turn your text into a video using AI"
+        icon={VideoIcon}
+        iconColor="text-orange-700"
+        bgColor="bg-orange-700/10"
       />
       <div className="px-4 lg:px-8">
         <div>
@@ -90,11 +90,14 @@ const MusicPage = () => {
               <Loader />
             </div>
           )}
-          {!music && !isLoading && <Empty label="No music generated" />}
-          {music && (
-            <audio controls className="w-full mt-8">
-              <source src={music} />
-            </audio>
+          {!video && !isLoading && <Empty label="No video generated" />}
+          {video && (
+            <video
+              controls
+              className="w-full mt-8 aspect-video rounded-lg border bg-black"
+            >
+              <source src={video} />
+            </video>
           )}
         </div>
       </div>
@@ -102,4 +105,4 @@ const MusicPage = () => {
   );
 };
 
-export default MusicPage;
+export default VideoPage;
