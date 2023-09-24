@@ -14,9 +14,7 @@ import axios from "axios";
 import { Empty } from "@/components/Empty";
 import { Loader } from "@/components/Loader";
 import { cn } from "@/lib/utils";
-import { UserAvatar } from "@/components/UserAvatar";
-import { BotAvatar } from "@/components/BotAvatar";
-import ReactMarkdown from "react-markdown";
+import { useProModal } from "@/hooks/use-pro-modal";
 import {
   Select,
   SelectContent,
@@ -27,6 +25,7 @@ import {
 import { Card, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
 const ImagePage = () => {
+  const proModel = useProModal();
   const router = useRouter();
   const [images, setImages] = useState<string[]>([]);
 
@@ -52,8 +51,9 @@ const ImagePage = () => {
 
       form.reset();
     } catch (error: any) {
-      //TODO: Open pro modal
-      console.log(error);
+      if (error?.response?.status === 403) {
+        proModel.onOpen();
+      }
     } finally {
       router.refresh();
     }

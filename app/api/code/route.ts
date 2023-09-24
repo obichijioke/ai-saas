@@ -4,6 +4,7 @@ import OpenAI from "openai";
 import { ChatCompletionMessage } from "openai/resources/chat/completions.mjs";
 import { incrementApiLimit, checkApiLimit } from "@/lib/api-limits";
 const openai = new OpenAI({ apiKey: process.env.OPEN_AI_KEY });
+import { checkSubscription } from "@/lib/subscription";
 
 const instructionMessage: ChatCompletionMessage = {
   role: "system",
@@ -29,8 +30,9 @@ export async function POST(req: Request) {
     }
 
     const isWithinLimit = await checkApiLimit();
+    const isPro = await checkSubscription();
 
-    if (!isWithinLimit) {
+    if (!isWithinLimit && !isPro) {
       return new NextResponse("Free Trial exceeded", { status: 403 });
     }
 
@@ -38,8 +40,9 @@ export async function POST(req: Request) {
       model: "gpt-3.5-turbo",
       messages: [instructionMessage, ...messages],
     });
-
-    await incrementApiLimit();
+    if (!isPro) {
+      await incrementApiLimit();
+    }
 
     return NextResponse.json(response.choices[0]);
   } catch (error) {
