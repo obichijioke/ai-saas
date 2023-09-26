@@ -29,7 +29,7 @@ const tools = [
     label: "Conversation",
     icon: MessageSquare,
     color: "text-violet-500",
-    bgColor: "bg-violet-500/0",
+    bgColor: "bg-violet-500/10",
     href: "/conversation",
   },
   {
@@ -105,6 +105,7 @@ const ProModal = () => {
         </DialogHeader>
         <DialogFooter>
           <Button
+            disabled={loading}
             size="lg"
             variant="premium"
             className="w-full"

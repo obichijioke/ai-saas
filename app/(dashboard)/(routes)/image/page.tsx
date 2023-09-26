@@ -11,9 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { Empty } from "@/components/Empty";
+import { Empty } from "@/components/ui/Empty";
 import { Loader } from "@/components/Loader";
-import { cn } from "@/lib/utils";
 import { useProModal } from "@/hooks/use-pro-modal";
 import {
   Select,
@@ -24,6 +23,7 @@ import {
 } from "@/components/ui/select";
 import { Card, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
+import toast from "react-hot-toast";
 const ImagePage = () => {
   const proModel = useProModal();
   const router = useRouter();
@@ -53,6 +53,8 @@ const ImagePage = () => {
     } catch (error: any) {
       if (error?.response?.status === 403) {
         proModel.onOpen();
+      } else {
+        toast.error("Something went wrong");
       }
     } finally {
       router.refresh();
