@@ -19,6 +19,7 @@ import { UserAvatar } from "@/components/UserAvatar";
 import { BotAvatar } from "@/components/BotAvatar";
 import { useProModal } from "@/hooks/use-pro-modal";
 import toast from "react-hot-toast";
+import Markdown from "react-markdown";
 const ConversationPage = () => {
   const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
   const router = useRouter();
@@ -124,7 +125,15 @@ const ConversationPage = () => {
                 key={index}
               >
                 {message.role === "user" ? <UserAvatar /> : <BotAvatar />}
-                <p className="text-sm">{message.content}</p>
+                <p className="text-sm">
+                  {message.role === "user" ? (
+                    <p className="">{message.content}</p>
+                  ) : (
+                    <Markdown className="overflow-hidden leading-7">
+                      {message.content + ""}
+                    </Markdown>
+                  )}
+                </p>
               </div>
             ))}
           </div>

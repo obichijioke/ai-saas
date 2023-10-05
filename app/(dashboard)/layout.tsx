@@ -7,13 +7,15 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const apiLimitCount = await getApiLimitCount();
   const isPro = await checkSubscription();
   return (
-    <div className="h-full relative">
-      <div className="hidden h-full md:flex md:w-72 md:flex-col md:fixed md:inset-y-0  bg-gray-900">
+    <div className="h-full relative bg-[#0D1B2E]">
+      <div className="hidden h-full md:flex md:w-72 md:flex-col md:fixed md:inset-y-0">
         <Sidebar apiLimitCount={apiLimitCount} isPro={isPro} />
       </div>
-      <main className="md:pl-72">
+      <main className="md:pl-72 h-full">
         <Navbar />
-        {children}
+        <div className="bg-gray-100 rounded-tl-xl h-full p-2 md:p-4 lg:p-8">
+          {children}
+        </div>
       </main>
     </div>
   );

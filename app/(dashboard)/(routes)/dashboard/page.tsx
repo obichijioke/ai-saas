@@ -1,6 +1,7 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
+import { useUser } from "@clerk/nextjs";
 import {
   ArrowRight,
   Code,
@@ -11,74 +12,78 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import HomeCard from "@/components/HomeCard";
+import { Heading } from "@/components/Heading";
+import UsageProgress from "@/components/UsageProgress";
+import { ReferralComponent } from "@/components/ReferralComponent";
 
 const tools = [
   {
-    label: "Conversation",
+    title: "Conversation",
     icon: MessageSquare,
+    image: "/test-image.png",
     color: "text-violet-500",
-    bgColor: "bg-violet-500/0",
     href: "/conversation",
   },
   {
-    label: "Music Generation",
+    title: "Music Generation",
     icon: Music,
+    image: "/test-image.png",
     color: "text-emerald-500",
-    bgColor: "bg-emerald-500/10",
     href: "/music",
   },
   {
-    label: "Image Generation",
+    title: "Image Generation",
     icon: ImageIcon,
+    image: "/test-image.png",
     color: "text-pink-700",
-    bgColor: "bg-pink-700/10",
     href: "/image",
-  },
-  {
-    label: "Video Generation",
-    icon: VideoIcon,
-    color: "text-orange-700",
-    bgColor: "bg-orange-700/10",
-    href: "/video",
-  },
-  {
-    label: "Code Generation",
-    icon: Code,
-    color: "text-green-500",
-    bgColor: "bg-green-500/10",
-    href: "/code",
   },
 ];
 
 const DashbordPage = () => {
   const router = useRouter();
+  const { user } = useUser();
 
   return (
-    <div>
-      <div className="mb-8 space-y-4">
-        <h2 className="text-2xl md:text-4xl font-bold text-center">
-          Explore the power of AI
-        </h2>
-        <p className="text-muted-foreground font-light text-sm md:text-lg text-center">
-          Chat with the smartest AI - Experience the power of AI
-        </p>
-      </div>
-      <div className="px-4 md:px-20 lg:px-32 space-y-4">
-        {tools.map((tool) => (
-          <Card
-            onClick={() => router.push(tool.href)}
-            key={tool.href}
-            className="p-4 border-black/5 flex items-center justify-between hover:shadow-md transition cursor-pointer"
-          >
-            <div className="flex items-center gap-x-4">
-              <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
-                <tool.icon className={cn("w-8 h-8", tool.color)} />
-              </div>
-              <div className="font-semibold">{tool.label}</div>
+    <div className="">
+      <Heading title="Home" />
+      <div className="p-4 md:p-6 lg:p-10 bg-white rounded-xl shadow-sm my-3">
+        <div className="mb-8 space-y-2">
+          <h2 className="text-2xl md:text-3xl font-bold">{`Hey ${user?.firstName}`}</h2>
+          <p className="text-muted-foreground font-light text-sm md:text-base">
+            Chat with the smartest AI - Experience the power of AI
+          </p>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
+          {tools.map((tool) => (
+            <div
+              className="w-full"
+              key={tool.href}
+              onClick={() => router.push(tool.href)}
+            >
+              <HomeCard
+                title={tool.title}
+                image={tool.image}
+                Icon={tool.icon}
+                iconColor={tool.color}
+              />
             </div>
-            <ArrowRight className="w-5 h-5" />
-          </Card>
-        ))}
+          ))}
+        </div>
+      </div>
+      <div className="my-3 py-4">
+        <h2 className="text-2xl md:text-3xl font-bold">Your Usage</h2>
+        <div className="p-4 md:p-6 lg:px-10 flex md:flex-row flex-col gap-4">
+          <div className="bg-white rounded-xl shadow-sm w-full md:w-3/5 px-2 lg:p-8 flex flex-col gap-5">
+            <UsageProgress />
+            <UsageProgress />
+            <UsageProgress />
+          </div>
+          <div className="bg-white rounded-xl shadow-sm w-full md:w-2/5 h-64 px-2 lg:p-8">
+            <ReferralComponent />
+          </div>
+        </div>
       </div>
     </div>
   );
