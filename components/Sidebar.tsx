@@ -32,6 +32,12 @@ const routes = [
     color: "text-violet-500",
   },
   {
+    label: "Content Generator",
+    icon: MessageSquare,
+    href: "/content",
+    color: "text-violet-500",
+  },
+  {
     label: "Image Generation",
     icon: ImageIcon,
     href: "/image",

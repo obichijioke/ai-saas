@@ -16,6 +16,7 @@ import HomeCard from "@/components/HomeCard";
 import { Heading } from "@/components/Heading";
 import UsageProgress from "@/components/UsageProgress";
 import { ReferralComponent } from "@/components/ReferralComponent";
+import PopularToolsCard from "@/components/PopularToolsCard";
 
 const tools = [
   {
@@ -46,12 +47,12 @@ const DashbordPage = () => {
   const { user } = useUser();
 
   return (
-    <div className="">
+    <div>
       <Heading title="Home" />
       <div className="p-4 md:p-6 lg:p-10 bg-white rounded-xl shadow-sm my-3">
         <div className="mb-8 space-y-2">
-          <h2 className="text-2xl md:text-3xl font-bold">{`Hey ${user?.firstName}`}</h2>
-          <p className="text-muted-foreground font-light text-sm md:text-base">
+          <h2 className="text-lg lg:text-xl font-semibold">{`Hey ${user?.firstName}`}</h2>
+          <p className="text-muted-foreground text-xs lg:text-sm">
             Chat with the smartest AI - Experience the power of AI
           </p>
         </div>
@@ -73,16 +74,24 @@ const DashbordPage = () => {
         </div>
       </div>
       <div className="my-3 py-4">
-        <h2 className="text-2xl md:text-3xl font-bold">Your Usage</h2>
-        <div className="p-4 md:p-6 lg:px-10 flex md:flex-row flex-col gap-4">
-          <div className="bg-white rounded-xl shadow-sm w-full md:w-3/5 px-2 lg:p-8 flex flex-col gap-5">
+        <h2 className="text-lg lg:text-xl font-semibold mb-3">Your Usage</h2>
+        <div className=" flex md:flex-row flex-col gap-4">
+          <div className="bg-white rounded-xl shadow-sm w-full md:w-3/5 p-4 lg:p-8 flex flex-col gap-2 lg:gap-3">
             <UsageProgress />
             <UsageProgress />
             <UsageProgress />
           </div>
-          <div className="bg-white rounded-xl shadow-sm w-full md:w-2/5 h-64 px-2 lg:p-8">
+          <div className="bg-white rounded-xl shadow-sm w-full md:w-2/5 p-4 lg:p-10">
             <ReferralComponent />
           </div>
+        </div>
+      </div>
+      <div className="my-3 py-4">
+        <h2 className="text-lg lg:text-xl font-semibold mb-3">Popular Tools</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
+          <PopularToolsCard />
+          <PopularToolsCard />
+          <PopularToolsCard />
         </div>
       </div>
     </div>

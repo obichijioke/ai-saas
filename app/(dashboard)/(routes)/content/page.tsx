@@ -15,51 +15,55 @@ import { Empty } from "@/components/ui/Empty";
 import { Loader } from "@/components/Loader";
 import { useProModal } from "@/hooks/use-pro-modal";
 import toast from "react-hot-toast";
-import Editor from "@/components/editor/Editor";
 import UseEditor from "@/components/UseEditor";
+import Image from "next/image";
+import { Label } from "@/components/ui/label";
+import Editor from "@/components/editor/Editor";
 
 const ContentPage = () => {
-  const [video, setVideo] = useState<string>();
   const router = useRouter();
   const proModel = useProModal();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      prompt: "",
-    },
-  });
-
-  const isLoading = form.formState.isSubmitting;
-
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      setVideo(undefined);
-
-      const response = await axios.post("/api/video", values);
-      //console.log(response.data);
-      setVideo(response.data[0]);
-      form.reset();
-    } catch (error: any) {
-      if (error?.response?.status === 403) {
-        proModel.onOpen();
-      } else {
-        toast.error("Something went wrong");
-      }
-    } finally {
-      router.refresh();
-    }
-  };
-
   return (
     <div>
-      <Heading
-        title="Content Creation"
-        description="Turn your text into a video using AI"
-      />
-      <div className="px-4 lg:px-8">
-        <UseEditor />
-        <Editor />
+      <Heading title="Content Creation" />
+      <div className="flex gap-3 w-full">
+        <div className="bg-white rounded-xl p-5 w-[66.3%]">
+          <Image
+            src={"/content-generator-icon.svg"}
+            alt=""
+            width={500}
+            height={500}
+            className="w-10 h-10"
+          />
+          <h3 className="text-base lg:text-xl font-semibold mt-3 mb-6  text-[#0D1B2E]">
+            Generate Content
+          </h3>
+          <div className="grid w-full items-center gap-1.5">
+            <Label htmlFor="text" className="mb-2 text-gray-500">
+              Enter content prompt
+            </Label>
+            <Input
+              type="text"
+              id="text"
+              className="focus-visible:ring-0 focus-visible:ring-transparent w-full"
+              placeholder="How to walk a dog correctly"
+            />
+          </div>
+          <div className="grid w-full items-center gap-1.5 mt-5">
+            <Label htmlFor="text" className="mb-2 text-gray-500">
+              Enter focus keywords (optional)
+            </Label>
+            <Input
+              type="text"
+              id="text"
+              className="focus-visible:ring-0 focus-visible:ring-transparent w-full"
+              placeholder="marketing, sales, etc."
+            />
+          </div>
+          <Editor />
+        </div>
+        <div className="bg-white rounded-xl w-[33.3%]"></div>
       </div>
     </div>
   );

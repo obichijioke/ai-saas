@@ -6,13 +6,15 @@ export const ReferralComponent = () => {
   return (
     <div className="w-full">
       <Image src={"/referral.svg"} alt="" width={78} height={78} />
-      <p className="">EARN 20%</p>
-      <h3 className="">Recurring Commission Forever</h3>
-      <p className="">
+      <p className="my-2 text-xs lg:text-xs font-medium text-[#0076FE]">
+        EARN 20%
+      </p>
+      <h3 className="font-semibold text-lg">Recurring Commission Forever</h3>
+      <p className="my-3 text-sm lg:text-base text-gray-500">
         Earn 20% recurring (that’s forever!) commission for referring friends to
         GrowthBar. You’ll get email alerts when your friends sign up.
       </p>
-      <Button>Refer now</Button>
+      <Button variant="premium">Refer now</Button>
     </div>
   );
 };

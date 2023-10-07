@@ -12,20 +12,20 @@ interface HomeCardProps {
 
 const HomeCard = ({ title, image, Icon, iconColor }: HomeCardProps) => {
   return (
-    <div className="rounded-lg overflow-hidden w-full shadow-md">
+    <div className="rounded-lg overflow-hidden w-full shadow-md ">
       <Image
         src={image}
         alt={title}
         width={500}
         height={500}
-        className="overflow-hidden w-full"
+        className="overflow-hidden w-full cursor-pointer"
       />
-      <div className="px-2 py-4 md:py-5 md:px-4 flex justify-between items-center">
-        <div className="flex justify-start gap-3 items-center">
-          <Icon className={cn("w-6 h-6", iconColor)} />
-          <span>{title}</span>
+      <div className="p-2 lg:py-5 md:px-4 flex justify-between items-center">
+        <div className="flex justify-start gap-3 items-center cursor-pointer">
+          <Icon className={cn("w-4 h-4 lg:w-6 lg:h-6", iconColor)} />
+          <span className="text-xs lg:text-sm">{title}</span>
         </div>
-        <MoreVertical className="text-gray-400" />
+        <MoreVertical className="text-xs lg:text-base text-gray-400 w-4 h-4 lg:w-6 lg:h-6 cursor-pointer" />
       </div>
     </div>
   );
