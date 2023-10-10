@@ -20,9 +20,14 @@ import Image from "next/image";
 import { Label } from "@/components/ui/label";
 import Editor from "@/components/editor/Editor";
 
+import "@uploadthing/react/styles.css";
+import { UploadButton } from "@uploadthing/react";
+import { OurFileRouter } from "../../../api/uploadthing/core";
+
 const ContentPage = () => {
   const router = useRouter();
   const proModel = useProModal();
+  const [data, setData] = useState(null);
 
   return (
     <div>
